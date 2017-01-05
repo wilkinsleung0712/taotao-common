@@ -1,0 +1,9 @@
+/target/
+
+*.project
+.project
+*.project
+*.classpath
+*.prefs
+*.MF
+target/classes/META-INF/maven/com.taotao/taotao-common/pom.properties
