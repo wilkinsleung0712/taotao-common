@@ -1,9 +1,20 @@
 package com.taotao.pojo;
 
 public class TreeNode {
+
     private long id;
     private String text;
+    /**
+     * sample return should be "close" or "open" both case sensitive
+     */
     private String state;
+
+    /**
+     * Default constructor
+     */
+    public TreeNode() {
+
+    }
 
     /**
      * @param id
