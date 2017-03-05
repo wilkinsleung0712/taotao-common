@@ -12,6 +12,7 @@ import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.utils.URIBuilder;
+import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
@@ -48,7 +49,8 @@ public class HttpClientUtils {
             // 执行请求
             response = httpClient.execute(httpGet);
             if (response.getStatusLine().getStatusCode() == 200) {
-                resultString = EntityUtils.toString(response.getEntity(), "UTF-8");
+                resultString = EntityUtils.toString(response.getEntity(),
+                        "UTF-8");
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -95,7 +97,8 @@ public class HttpClientUtils {
                     paramList.add(new BasicNameValuePair(key, param.get(key)));
                 }
                 // 模拟表单
-                UrlEncodedFormEntity entity = new UrlEncodedFormEntity(paramList);
+                UrlEncodedFormEntity entity = new UrlEncodedFormEntity(
+                        paramList);
                 doPost.setEntity(entity);
             }
             // 执行http请求
@@ -120,7 +123,7 @@ public class HttpClientUtils {
      * @param uri
      * @return
      */
-    public String doPost(String uri) {
+    public static String doPost(String uri) {
         return doPost(uri, null);
     }
 
@@ -129,7 +132,7 @@ public class HttpClientUtils {
      * @param json
      * @return
      */
-    public String doPostJson(String uri, String json) {
+    public static String doPostJson(String uri, String json) {
         // 创建Httpclient对象
         CloseableHttpClient httpClient = HttpClients.createDefault();
         CloseableHttpResponse response = null;
@@ -139,11 +142,12 @@ public class HttpClientUtils {
             // 创建Http Post请求
             HttpPost httpPost = new HttpPost(uri);
             // 创建请求内容
-            StringEntity stringEntity = new StringEntity(json);
-            httpPost.setEntity(stringEntity);
+            StringEntity entity = new StringEntity(json,
+                    ContentType.APPLICATION_JSON);
+            httpPost.setEntity(entity);
             // 执行http请求
             response = httpClient.execute(httpPost);
-            resultString = EntityUtils.toString(stringEntity, "UTF-8");
+            resultString = EntityUtils.toString(response.getEntity(), "UTF-8");
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
